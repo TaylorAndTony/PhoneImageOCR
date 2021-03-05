@@ -1,12 +1,15 @@
-from aip import AipOcr
-import yaml
-import pyautogui as ag
-import keyboard
 from threading import Thread
-from PIL import ImageGrab, Image
+import webbrowser
+
+import keyboard
+import pyautogui as ag
+import pyperclip as clip
+import yaml
+from aip import AipOcr
+from PIL import Image, ImageGrab
+from PySide2.QtCore import QObject, Signal
 from PySide2.QtUiTools import QUiLoader
 from PySide2.QtWidgets import QApplication, QLabel
-from PySide2.QtCore import Signal, QObject
 
 
 class MySignal(QObject):
@@ -31,7 +34,10 @@ class UI:
         # 截图的左上、右下坐标
         self.lt = (0, 0)
         self.rb = (0, 0)
+        # 截图名称
         self.shot_name = 'screenshot.png'
+        # 识别内容
+        self.recognized_text = ''
 
     def update_main(self, obj, msg):
         """ 多线程修改主要提示的回调 """
@@ -82,12 +88,26 @@ class UI:
     def btn_ocr(self):
         """ Callback button of 截图+识别 """
         image = ImageGrab.grab((self.lt[0], self.lt[1], self.rb[0], self.rb[1]))
-        image.show()
+        image.save(self.shot_name)
+        text = recognize(self.shot_name)
+        print(text)
+        self.window.plainTextEdit.setPlainText(text)
+        self.recognized_text = text
+        clip.copy(text)
 
     def btn_search(self):
         """ Callback button of 截图+搜索 """
-        pass
-
+        # 直接调用一次识别方法，然后打开浏览器就好了
+        self.btn_ocr()
+        # 检测长度防止无法搜索
+        if len(self.recognized_text) > 40:
+            text = self.recognized_text[:40]
+        else:
+            text = self.recognized_text
+        url = f'https://www.baidu.com/s?ie=utf-8&wd={text}'
+        print(url)
+        webbrowser.open(url)
+        
     def run(self):
         self.window.show()
         self.app.exec_()
