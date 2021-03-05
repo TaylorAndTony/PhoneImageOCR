@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Form</class>
+ <widget class="QWidget" name="Form">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>690</width>
+    <height>491</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">QPlainTextEdit, QLineEdit
+{
+  font: 14pt &quot;Microsoft YaHei UI&quot;;
+  background-color:#c5e1a5;
+  border:2px solid #9ccc65;
+  border-radius:5px;
+  color: #454545;
+  padding: 6px 6px
+}
+
+/* labels and checkboxes */
+QLabel,QCheckBox
+{
+  font: 14pt &quot;Microsoft YaHei UI&quot;;
+}
+
+
+/* 按钮 */
+QPushButton
+{
+  font: 14pt &quot;Microsoft YaHei UI&quot;;
+  background-color:rgb(134,183,200);
+  border:2px solid #5F92B2;
+  border-radius:5px;
+  color:white;
+  padding: 6px 6px
+}
+QPushButton:hover
+{
+  font: 14pt &quot;Microsoft YaHei UI&quot;;
+  background-color:#4dd0e1;
+  border:2px solid #5F92B2;
+  border-radius:5px;
+  color:white;
+  padding: 6px 6px
+}
+QPushButton:hover:pressed
+{
+  font: 14pt &quot;Microsoft YaHei UI&quot;;
+  background-color:#00bcd4; 
+  border:2px solid #0097a7;
+  border-radius:5px;
+  color:white;
+  padding: 6px 6px
+}</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout_3">
+   <item>
+    <widget class="QLabel" name="status_text">
+     <property name="text">
+      <string>TextLabel</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout_2">
+     <item>
+      <layout class="QVBoxLayout" name="verticalLayout_2">
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout">
+         <item>
+          <widget class="QLabel" name="label">
+           <property name="text">
+            <string>截取坐标：</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="coords">
+           <property name="text">
+            <string>(0, 0)(0, 0)</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <layout class="QVBoxLayout" name="verticalLayout">
+         <item>
+          <widget class="QPushButton" name="btn_set_pos">
+           <property name="text">
+            <string>指定坐标</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="btn_ocr">
+           <property name="text">
+            <string>截图+识别</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="btn_search">
+           <property name="text">
+            <string>截图+搜索</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <widget class="QPlainTextEdit" name="plainTextEdit"/>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
