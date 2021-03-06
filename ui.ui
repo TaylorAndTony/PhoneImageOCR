@@ -130,6 +130,13 @@ QPushButton:hover:pressed
           </widget>
          </item>
          <item>
+          <widget class="QPushButton" name="btn_cap">
+           <property name="text">
+            <string>截图</string>
+           </property>
+          </widget>
+         </item>
+         <item>
           <widget class="QPushButton" name="btn_ocr">
            <property name="text">
             <string>截图+识别</string>

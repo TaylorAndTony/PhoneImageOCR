@@ -1,5 +1,7 @@
 from threading import Thread
 import webbrowser
+import time
+from random import randint
 
 import keyboard
 import pyautogui as ag
@@ -28,6 +30,7 @@ class UI:
         self.window.btn_ocr.clicked.connect(self.btn_ocr)
         self.window.btn_search.clicked.connect(self.btn_search)
         self.window.btn_set_pos.clicked.connect(self.btn_set_pos)
+        self.window.btn_cap.clicked.connect(self.btn_cap)
         # Signal
         my_signal.coords_info.connect(self.update_coords)
         my_signal.main_info.connect(self.update_main)
@@ -62,7 +65,7 @@ class UI:
         # Update
         my_signal.coords_info.emit(
             self.window.coords, f'({left_top_x}, {left_top_y}, {right_bottom_x}, {right_bottom_y})')
-        self.lt = (left_top_x , left_top_y)
+        self.lt = (left_top_x, left_top_y)
         self.rb = (right_bottom_x, right_bottom_y)
         # finish
         my_signal.main_info.emit(
@@ -87,7 +90,8 @@ class UI:
 
     def btn_ocr(self):
         """ Callback button of 截图+识别 """
-        image = ImageGrab.grab((self.lt[0], self.lt[1], self.rb[0], self.rb[1]))
+        image = ImageGrab.grab(
+            (self.lt[0], self.lt[1], self.rb[0], self.rb[1]))
         image.save(self.shot_name)
         text = recognize(self.shot_name)
         print(text)
@@ -107,7 +111,19 @@ class UI:
         url = f'https://www.baidu.com/s?ie=utf-8&wd={text}'
         print(url)
         webbrowser.open(url)
-        
+
+    def btn_cap(self):
+        """ 屏幕截图 """
+        if self.lt == (0, 0) or self.rb == (0, 0):
+            print('未采集坐标！')
+            return
+        pos = (self.lt[0], self.lt[1], self.rb[0], self.rb[1])
+        image = ImageGrab.grab((pos))
+        name = time.strftime("%H-%M-%S",
+                             time.localtime()) + '--' + str(randint(1, 100))
+        image.save(f'./screenshots/{name}.png')
+        self.window.plainTextEdit.setPlainText(f'{name} 已保存')
+
     def run(self):
         self.window.show()
         self.app.exec_()
