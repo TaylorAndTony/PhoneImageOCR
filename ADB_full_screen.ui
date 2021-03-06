@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Form</class>
+ <widget class="QWidget" name="Form">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>855</width>
+    <height>634</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">QPlainTextEdit, QLineEdit
+{
+  font: 14pt &quot;Microsoft YaHei UI&quot;;
+  background-color:#fff8e1;
+  border:2px solid #ffcc80;
+  border-radius:5px;
+  color: #454545;
+  padding: 6px 6px
+}
+
+QLabel,QCheckBox
+{
+  font: 14pt &quot;Microsoft YaHei UI&quot;;
+  background-color:#e8f5e9;
+  border:2px solid #a5d6a7;
+  border-radius:5px;
+}
+
+
+/* 绿色按钮 */
+QPushButton
+{
+  font: 14pt &quot;Microsoft YaHei UI&quot;;
+  background-color:#9ccc65;
+  border:2px solid #7cb342;
+  border-radius:5px;
+  color: white;
+  padding: 6px 6px
+}
+QPushButton:hover
+{
+  font: 14pt &quot;Microsoft YaHei UI&quot;;
+  background-color:#7cb342;
+  border:2px solid #689f38;
+  border-radius:5px;
+  color:white;
+  padding: 6px 6px
+}
+QPushButton:hover:pressed
+{
+  font: 14pt &quot;Microsoft YaHei UI&quot;;
+  background-color:#558b2f; 
+  border:2px solid #33691e;
+  border-radius:5px;
+  color:white;
+  padding: 6px 6px
+}</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <property name="spacing">
+    <number>22</number>
+   </property>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="1,1,3">
+     <item>
+      <widget class="QPushButton" name="connectADB">
+       <property name="text">
+        <string>连接 ADB</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="disconnectADB">
+       <property name="text">
+        <string>断开 ADB</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="shoot_now">
+       <property name="text">
+        <string>截屏+识别</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout" stretch="2,3">
+     <item>
+      <widget class="QPlainTextEdit" name="cmd_out">
+       <property name="styleSheet">
+        <string notr="true">QPlainTextEdit, QLineEdit
+{
+  font: 14pt &quot;Microsoft YaHei UI&quot;;
+  background-color:#fbe9e7;
+  border:2px solid #ffab91;
+  border-radius:5px;
+  color: #454545;
+  padding: 6px 6px
+}</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPlainTextEdit" name="text_out"/>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

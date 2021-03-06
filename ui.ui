@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>690</width>
-    <height>491</height>
+    <width>458</width>
+    <height>416</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -31,21 +31,21 @@ QLabel,QCheckBox
 }
 
 
-/* 按钮 */
+/* 绿色按钮 */
 QPushButton
 {
   font: 14pt &quot;Microsoft YaHei UI&quot;;
-  background-color:rgb(134,183,200);
-  border:2px solid #5F92B2;
+  background-color:#9ccc65;
+  border:2px solid #7cb342;
   border-radius:5px;
-  color:white;
+  color: white;
   padding: 6px 6px
 }
 QPushButton:hover
 {
   font: 14pt &quot;Microsoft YaHei UI&quot;;
-  background-color:#4dd0e1;
-  border:2px solid #5F92B2;
+  background-color:#7cb342;
+  border:2px solid #689f38;
   border-radius:5px;
   color:white;
   padding: 6px 6px
@@ -53,8 +53,8 @@ QPushButton:hover
 QPushButton:hover:pressed
 {
   font: 14pt &quot;Microsoft YaHei UI&quot;;
-  background-color:#00bcd4; 
-  border:2px solid #0097a7;
+  background-color:#558b2f; 
+  border:2px solid #33691e;
   border-radius:5px;
   color:white;
   padding: 6px 6px
@@ -94,6 +94,36 @@ QPushButton:hover:pressed
         <layout class="QVBoxLayout" name="verticalLayout">
          <item>
           <widget class="QPushButton" name="btn_set_pos">
+           <property name="styleSheet">
+            <string notr="true">/* buttons */
+QPushButton
+{
+  font: 14pt &quot;Microsoft YaHei UI&quot;;
+  background-color:rgb(248,187,208);
+  border:2px solid #f06292;
+  border-radius:5px;
+  color:white;
+  padding: 6px 6px
+}
+QPushButton:hover
+{
+  font: 14pt &quot;Microsoft YaHei UI&quot;;
+  background-color: #f48fb1;
+  border:2px solid #ec407a;
+  border-radius:5px;
+  color:white;
+  padding: 6px 6px
+}
+QPushButton:hover:pressed
+{
+  font: 14pt &quot;Microsoft YaHei UI&quot;;
+  background-color:#f44336; 
+  border:2px solid #d81b60;
+  border-radius:5px;
+  color:white;
+  padding: 6px 6px
+}</string>
+           </property>
            <property name="text">
             <string>指定坐标</string>
            </property>
