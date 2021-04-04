@@ -31,21 +31,21 @@ QLabel,QCheckBox
 }
 
 
-/* 绿色按钮 */
+/* buttons */
 QPushButton
 {
   font: 14pt &quot;Microsoft YaHei UI&quot;;
-  background-color:#9ccc65;
-  border:2px solid #7cb342;
+  background-color:rgb(134,183,200);
+  border:2px solid #5F92B2;
   border-radius:5px;
-  color: white;
+  color:white;
   padding: 6px 6px
 }
 QPushButton:hover
 {
   font: 14pt &quot;Microsoft YaHei UI&quot;;
-  background-color:#7cb342;
-  border:2px solid #689f38;
+  background-color:#4dd0e1;
+  border:2px solid #5F92B2;
   border-radius:5px;
   color:white;
   padding: 6px 6px
@@ -53,8 +53,8 @@ QPushButton:hover
 QPushButton:hover:pressed
 {
   font: 14pt &quot;Microsoft YaHei UI&quot;;
-  background-color:#558b2f; 
-  border:2px solid #33691e;
+  background-color:#00bcd4; 
+  border:2px solid #0097a7;
   border-radius:5px;
   color:white;
   padding: 6px 6px
