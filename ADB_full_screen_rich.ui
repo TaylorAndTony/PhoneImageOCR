@@ -14,7 +14,7 @@
    <string>Form</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">QPlainTextEdit, QLineEdit
+   <string notr="true">QPlainTextEdit, QLineEdit,QTextEdit
 {
   font: 14pt &quot;Microsoft YaHei UI&quot;;
   background-color:#fff8e1;
@@ -67,7 +67,7 @@ QPushButton:hover:pressed
     <number>22</number>
    </property>
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="1,1,3">
+    <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="1,1,0,3">
      <item>
       <widget class="QPushButton" name="connectADB">
        <property name="text">
@@ -79,6 +79,13 @@ QPushButton:hover:pressed
       <widget class="QPushButton" name="disconnectADB">
        <property name="text">
         <string>断开 ADB</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="test_btn">
+       <property name="text">
+        <string>测试</string>
        </property>
       </widget>
      </item>
@@ -109,7 +116,39 @@ QPushButton:hover:pressed
       </widget>
      </item>
      <item>
-      <widget class="QPlainTextEdit" name="text_out"/>
+      <layout class="QVBoxLayout" name="verticalLayout_2">
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_3">
+         <item>
+          <widget class="QLabel" name="label">
+           <property name="text">
+            <string>对这些换行：</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLineEdit" name="new_line"/>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_4">
+         <item>
+          <widget class="QLabel" name="t3rgef">
+           <property name="text">
+            <string>高亮关键词：</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLineEdit" name="highlight"/>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <widget class="QTextEdit" name="rich_out"/>
+       </item>
+      </layout>
      </item>
     </layout>
    </item>

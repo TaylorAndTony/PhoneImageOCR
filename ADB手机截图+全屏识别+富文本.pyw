@@ -22,11 +22,16 @@ my_signal = MySignal()
 class UI:
     def __init__(self):
         self.app = QApplication([])
-        self.window = QUiLoader().load('ADB_full_screen.ui')
+        self.window = QUiLoader().load('ADB_full_screen_rich.ui')
         self.window.connectADB.clicked.connect(self.connectADB)
         self.window.disconnectADB.clicked.connect(self.disconnectADB)
         self.window.shoot_now.clicked.connect(self.shoot_now)
+        self.window.test_btn.clicked.connect(self.test_btn)
         my_signal.text_show.connect(self.update_text)
+
+    def test_btn(self):
+        """用于测试"""
+        my_signal.text_show.emit(None, '一般看见这种图我都是直接点赞的')
 
     def __append_info(self, info):
         """ 像命令行内插入文本 """
@@ -50,8 +55,39 @@ class UI:
 
     def update_text(self, obj, text):
         """ 用于多线程展示最终结果，开头加个当前时间 """
-        t = get_time() + '\n' + text
-        self.window.text_out.setPlainText(t)
+        # 获取需要换行的字符
+        new_line_in = self.window.new_line.text()
+
+        # 高亮关键字
+        keyword = self.window.highlight.text()
+        # 关键字长度
+        key_lenth = len(keyword)
+        # 这一步处理 html，找高亮
+        indexx = text.find(keyword)
+        if indexx != -1 and indexx != 0:
+            print('检测到关键字：', indexx)
+            html_before = f"<font size=4>{text[:indexx]}</font>"
+            html_high = f"<font size=4 color=\"red\">{text[indexx:indexx + key_lenth]}</font>"
+            html_end = f"<font size=4>{text[indexx + key_lenth:]}</font>"
+            html = html_before + html_high + html_end
+        else:
+            print('纯文本')
+            html = f"<font size=4>{text}</font>"
+        # html是没有换行的文本
+        # 换行
+        # 先检测界面输入的长度
+        if len(new_line_in) != 0:
+            print('换行！')
+            # 然后空格分隔
+            new_lines = new_line_in.split(' ')
+            # 添加换行
+            for i in new_lines:
+                print('换行文本：', i)
+                # t 是最终文本
+                html = html.replace(i, i + '<br>' + '\n')
+            print(html)
+
+        self.window.rich_out.setHtml(html)
 
     def __ocr(self):
         """ OCR本地图片，用 多线程调用此方法 """
