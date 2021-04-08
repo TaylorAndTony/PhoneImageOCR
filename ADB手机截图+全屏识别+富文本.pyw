@@ -84,7 +84,7 @@ class UI:
             for i in new_lines:
                 print('换行文本：', i)
                 # t 是最终文本
-                html = html.replace(i, i + '<br>' + '\n')
+                html = html.replace(i, '<br>' + i + '<br>' + '\n')
             print(html)
 
         self.window.rich_out.setHtml(html)
@@ -94,7 +94,7 @@ class UI:
         # OCR it
         t = recognize('test.png')
         # set the text
-        my_signal.text_show.emit(self.window.text_out, t)
+        my_signal.text_show.emit(None, t)
 
     def shoot_now(self):
         """ 截图 """
