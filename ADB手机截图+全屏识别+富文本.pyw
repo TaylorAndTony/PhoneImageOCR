@@ -92,7 +92,8 @@ class UI:
     def __ocr(self):
         """ OCR本地图片，用 多线程调用此方法 """
         # OCR it
-        t = recognize('test.png')
+        r = os.popen('Windows.Media.Ocr.Cli.exe "test.png"')
+        t = r.read()
         # set the text
         my_signal.text_show.emit(None, t)
 
