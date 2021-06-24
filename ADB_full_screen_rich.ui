@@ -99,6 +99,31 @@ QPushButton:hover:pressed
     </layout>
    </item>
    <item>
+    <layout class="QHBoxLayout" name="horizontalLayout_5">
+     <item>
+      <widget class="QPushButton" name="setCrop">
+       <property name="text">
+        <string>指定图片裁剪</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="resetCrop">
+       <property name="text">
+        <string>重置裁剪</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="cropArea">
+       <property name="text">
+        <string>TextLabel</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
     <layout class="QHBoxLayout" name="horizontalLayout" stretch="2,3">
      <item>
       <widget class="QPlainTextEdit" name="cmd_out">

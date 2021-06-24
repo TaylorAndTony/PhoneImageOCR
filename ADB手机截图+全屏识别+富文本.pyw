@@ -2,9 +2,8 @@
 依赖：
 ADB_full_screen_rich.ui
 """
-from aip import AipOcr
 import os
-import yaml
+import cv2 as cv
 import time
 from PySide2.QtUiTools import QUiLoader
 from PySide2.QtWidgets import QApplication, QPlainTextEdit
@@ -14,6 +13,7 @@ from threading import Thread
 
 class MySignal(QObject):
     text_show = Signal(QPlainTextEdit, str)
+    update_lines = Signal()
 
 
 my_signal = MySignal()
@@ -21,13 +21,69 @@ my_signal = MySignal()
 
 class UI:
     def __init__(self):
+        # scale ratio, if the image needed to be resized
+        self.ratio = 1
+        # lines, store the up and bottom lines
+        self.lines = []
+        # gui
         self.app = QApplication([])
         self.window = QUiLoader().load('ADB_full_screen_rich.ui')
         self.window.connectADB.clicked.connect(self.connectADB)
         self.window.disconnectADB.clicked.connect(self.disconnectADB)
         self.window.shoot_now.clicked.connect(self.shoot_now)
         self.window.test_btn.clicked.connect(self.test_btn)
+        self.window.setCrop.clicked.connect(self.setCrop)
+        self.window.resetCrop.clicked.connect(self.resetCrop)
+        # signals
+        my_signal.update_lines.connect(self.update_lines)
         my_signal.text_show.connect(self.update_text)
+
+    def update_lines(self):
+        """ signal callback, to update the coord text on the gui """
+        self.window.cropArea.setText(str(self.lines))
+
+    def resetCrop(self):
+        self.lines = []
+        my_signal.update_lines.emit()
+
+    def setCrop(self):
+        """ Callback button of setCoord """
+
+        def __onMouse(event, x, y, flags, param) -> None:
+            """callback function to handle mouse"""
+            if event == cv.EVENT_LBUTTONDOWN:
+                # this is a scaled image
+                cv.imshow('imageShow', scaled)
+                self.lines.append(int(y / self.ratio))
+                if len(self.lines) > 2:
+                    self.lines = self.lines[-2:]
+                print(self.lines)
+                my_signal.update_lines.emit()
+
+        # read the first image in the folder
+        first = cv.imread('test.png', 0)
+
+        # calc whether the image is needed to resize
+        width, height = first.shape[1], first.shape[0]
+        if width > 1200:
+            # scale the image
+            targetWidth = 900
+            self.ratio = targetWidth / width
+            targetHeight = int(height * self.ratio)
+            scaled = cv.resize(first, (targetWidth, targetHeight))
+
+        elif height > 800:
+            targetHeight = 700
+            self.ratio = targetHeight / height
+            targetWidth = int(width * self.ratio)
+            scaled = cv.resize(first, (targetWidth, targetHeight))
+        else:
+            scaled = first
+
+        cv.namedWindow('imageShow')
+        cv.imshow('imageShow', scaled)
+        cv.setMouseCallback('imageShow', __onMouse)
+
 
     def test_btn(self):
         """用于测试"""
@@ -89,10 +145,10 @@ class UI:
 
         self.window.rich_out.setHtml(html)
 
-    def __ocr(self):
+    def __ocr(self, name):
         """ OCR本地图片，用 多线程调用此方法 """
         # OCR it
-        r = os.popen('Windows.Media.Ocr.Cli.exe "test.png"')
+        r = os.popen(f'Windows.Media.Ocr.Cli.exe "{name}"')
         t = r.read()
         # set the text
         my_signal.text_show.emit(None, t)
@@ -102,35 +158,25 @@ class UI:
         # get screen shot
         self.exec_cmd('adb shell screencap /sdcard/test.png')
         self.exec_cmd('adb pull /sdcard/test.png ./')
-        self.__append_info('开启多线程...')
-        t = Thread(target=self.__ocr)
+        # 每次接图都需要检测有没有裁剪坐标
+        if len(self.lines) == 2:
+            img = cv.imread('test.png')
+            up = self.lines[0]
+            down = self.lines[1]
+            img = img[up:down, :]
+            cv.imwrite('crop.png', img)
+            name = 'crop.png'
+            print('猜见了才剪了裁剪了图片')
+        else:
+            name = 'test.png'
+        self.__append_info(f'开启多线程...文件目标：{name}')
+        t = Thread(target=self.__ocr, args=(name,))
         t.setDaemon(True)
         t.start()
 
     def run(self):
         self.window.show()
         self.app.exec_()
-
-
-def recognize(image) -> str:
-    """ OCR识别给定的图片文字内容 """
-    with open('settings.yml', 'r', encoding='utf-8') as f:
-        config = yaml.safe_load(f)
-
-    with open(image, 'rb') as f:
-        img = f.read()
-
-    APP_ID = config['APP_ID']
-    API_KEY = config['API_KEY']
-    SECRET_KEY = config['SECRET_KEY']
-
-    client = AipOcr(APP_ID, API_KEY, SECRET_KEY)
-    res = client.basicGeneral(img)
-    words = res['words_result']
-    res = ''
-    for line in words:
-        res += line['words']
-    return res
 
 
 def get_time() -> str:
