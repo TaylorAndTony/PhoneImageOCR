@@ -53,6 +53,11 @@ class UI:
             """callback function to handle mouse"""
             if event == cv.EVENT_LBUTTONDOWN:
                 # this is a scaled image
+                cv.line(scaled,
+                        (0, y),
+                        (scaled.shape[1], y),
+                        (0, 255, 0),
+                        2)
                 cv.imshow('imageShow', scaled)
                 self.lines.append(int(y / self.ratio))
                 if len(self.lines) > 2:
@@ -61,7 +66,7 @@ class UI:
                 my_signal.update_lines.emit()
 
         # read the first image in the folder
-        first = cv.imread('test.png', 0)
+        first = cv.imread('test.png')
 
         # calc whether the image is needed to resize
         width, height = first.shape[1], first.shape[0]
